@@ -8,5 +8,3 @@ filtered_df = df[df['Age'] < 35]
 
 # Write the filtered data to a new CSV file
 filtered_df.to_csv('filtered_data_below_35.csv', index=False)
-
-print("Filtered data saved to 'filtered_data_below_35.csv'")
