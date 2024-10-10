@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-data = pd.read_csv('data.csv')
+data = pd.read_csv('../../datasets/data.csv')
 
 # Separate the features and target variable
 X = data.drop(columns=['Target'])
