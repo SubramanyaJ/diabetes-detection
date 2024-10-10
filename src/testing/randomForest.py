@@ -29,15 +29,15 @@ random_forest = RandomForestClassifier(random_state=40)
 
 # Set up parameter grids for GridSearchCV
 param_grid_nb = {
-    'var_smoothing': [1e-8]  # Values from 1 to 1e-9
+    'var_smoothing': [1e-8]  # Fixed value
 }
 
 param_grid_rf = {
-    'n_estimators': [50, 100, 200],  # Experiment with different numbers of trees
+    'n_estimators': [50],  # Reduced to one option
     'criterion': ['entropy'],
-    'max_depth': [10],  # Various max depth options
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4],
+    'max_depth': [10],  # Only one option
+    'min_samples_split': [2, 5],  # Fewer options
+    'min_samples_leaf': [1],  # Fixed value
     'max_features': [None]
 }
 
@@ -59,8 +59,8 @@ param_grid_voting = {
     'random_forest__max_features': param_grid_rf['max_features']
 }
 
-# Set up GridSearchCV for the voting classifier
-grid_search = GridSearchCV(estimator=voting_clf, param_grid=param_grid_voting, cv=10, scoring='accuracy')
+# Set up GridSearchCV for the voting classifier with reduced cv
+grid_search = GridSearchCV(estimator=voting_clf, param_grid=param_grid_voting, cv=5, scoring='accuracy')
 
 # Train the model using GridSearchCV
 grid_search.fit(X_train_scaled, y_train)
