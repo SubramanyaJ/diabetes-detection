@@ -1,9 +1,8 @@
-# Accuracy : 0.8699728596101653
-
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -28,24 +27,25 @@ cart_model = DecisionTreeClassifier(random_state=42)
 
 # Set up the hyperparameter grid
 param_grid = {
-    'criterion': ['entropy'],  # Split criteria
-    'max_depth': [10, 12],  # Max depth of the tree
-    'min_samples_split': [1, 2, 3],  # Minimum samples to split a node
-    'min_samples_leaf': [3, 4, 5],  # Minimum samples required in a leaf
-    'max_features': [None],  # Number of features to consider for the best split
+    'criterion': ['entropy'],
+    'max_depth': [10, 12],
+    'min_samples_split': [2, 3, 4],
+    'min_samples_leaf': [3, 4, 5],
+    'max_features': [None]
 }
 
-# Set up GridSearchCV
-grid_search = GridSearchCV(estimator=cart_model, param_grid=param_grid, cv=10, n_jobs=-1, verbose=1)
+# Use StratifiedKFold for cross-validation
+cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
 
-# Train the model with hyperparameter tuning
+# Set up GridSearchCV
+grid_search = GridSearchCV(estimator=cart_model, param_grid=param_grid, cv=cv, scoring='accuracy', n_jobs=-1, verbose=1)
 grid_search.fit(X_train_scaled, y_train)
 
-# Get the best model and its parameters
+# Get the best model and parameters
 best_cart_model = grid_search.best_estimator_
 best_params = grid_search.best_params_
 
-# Make predictions on the test data
+# Make predictions
 y_pred = best_cart_model.predict(X_test_scaled)
 
 # Calculate statistics
@@ -53,11 +53,17 @@ accuracy = accuracy_score(y_test, y_pred)
 class_report = classification_report(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)
 
-# Print out the statistics
+# Print statistics
 print(f"Best Parameters: {best_params}")
 print(f"Accuracy: {accuracy}")
 print("\nClassification Report:")
 print(class_report)
+
+# Visualize the Decision Tree
+plt.figure(figsize=(20, 10))
+plot_tree(best_cart_model, filled=True, feature_names=X.columns, class_names=[str(cls) for cls in np.unique(y)], rounded=True)
+plt.title("Decision Tree Visualization")
+plt.show()
 
 # Plot confusion matrix
 plt.figure(figsize=(8, 6))
