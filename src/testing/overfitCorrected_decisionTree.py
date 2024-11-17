@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-data = pd.read_csv('data.csv')
+data = pd.read_csv('../../datasets/data.csv')
 
 # Separate the features and target variable
 X = data.drop(columns=['Target'])
@@ -34,9 +34,9 @@ cart_model = DecisionTreeClassifier(random_state=42)
 param_grid = {
     'criterion': ['entropy'],
     'max_depth': [7],  # Limit depth to avoid overfitting
-    'min_samples_split': [50],  # Increase minimum samples required to split a node
-    'min_samples_leaf': [100],  # Increase minimum samples required in leaf nodes
-    'ccp_alpha': [0.08],  # Cost-complexity pruning
+    'min_samples_split': [40],  # Increase minimum samples required to split a node
+    'min_samples_leaf': [40],  # Increase minimum samples required in leaf nodes
+    'ccp_alpha': [0.10],  # Cost-complexity pruning
     'max_features': [None, 'sqrt', 'log2']  # Experiment with feature selection at splits
 }
 
