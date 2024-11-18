@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold, learning_curve
+from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold, learning_curve, cross_val_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
@@ -27,55 +27,54 @@ X_test = pd.get_dummies(X_test, drop_first=True)
 # Align columns of training and testing sets (to handle possible column mismatches after one-hot encoding)
 X_train, X_test = X_train.align(X_test, axis=1, fill_value=0)
 
-# Create a Decision Tree Classifier
-cart_model = DecisionTreeClassifier(random_state=42)
+# Step 1: Extract effective alphas using cost-complexity pruning path
+temp_tree = DecisionTreeClassifier(random_state=42, max_depth=8)  # Set max_depth to 8
+temp_tree.fit(X_train, y_train)
+path = temp_tree.cost_complexity_pruning_path(X_train, y_train)
+alphas = path.ccp_alphas
 
-# Set up the hyperparameter grid
-param_grid = {
-    'criterion': ['entropy'],
-    'max_depth': [7],  # Limit depth to avoid overfitting
-    'min_samples_split': [40],  # Increase minimum samples required to split a node
-    'min_samples_leaf': [40],  # Increase minimum samples required in leaf nodes
-    'ccp_alpha': [0.10],  # Cost-complexity pruning
-    'max_features': [None, 'sqrt', 'log2']  # Experiment with feature selection at splits
-}
-
-# Use StratifiedKFold for cross-validation
+# Step 2: Evaluate performance for each alpha using cross-validation
 cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42)
+alpha_scores = []
+for alpha in alphas:
+    pruned_tree = DecisionTreeClassifier(random_state=42, ccp_alpha=alpha, max_depth=8)
+    scores = cross_val_score(pruned_tree, X_train, y_train, cv=cv, scoring='accuracy')
+    alpha_scores.append((alpha, np.mean(scores)))
 
-# Set up GridSearchCV
-grid_search = GridSearchCV(estimator=cart_model, param_grid=param_grid, cv=cv, scoring='accuracy', n_jobs=-1, verbose=1)
-grid_search.fit(X_train, y_train)
+# Analyze results
+alpha_results = pd.DataFrame(alpha_scores, columns=['ccp_alpha', 'cv_score'])
+optimal_alpha = alpha_results.loc[alpha_results['cv_score'].idxmax(), 'ccp_alpha']
 
-# Get the best model and parameters
-best_cart_model = grid_search.best_estimator_
-best_params = grid_search.best_params_
+# Plot the alpha vs. CV accuracy
+plt.figure(figsize=(12, 8))
+plt.plot(alpha_results['ccp_alpha'], alpha_results['cv_score'], marker='o', label='CV Accuracy')
+plt.title('Effect of ccp_alpha on Cross-Validation Accuracy')
+plt.xlabel('ccp_alpha')
+plt.ylabel('Cross-Validation Accuracy')
+plt.legend()
+plt.grid()
+plt.show()
 
-# Make predictions
-y_pred = best_cart_model.predict(X_test)
+# Step 3: Refit the tree with optimal alpha and max_depth=8
+final_tree = DecisionTreeClassifier(
+    random_state=42,
+    ccp_alpha=optimal_alpha,
+    max_depth=8,  # Limit tree depth to 8
+    min_samples_split=10,  # To balance depth and leaf nodes
+    min_samples_leaf=5
+)
+final_tree.fit(X_train, y_train)
 
-# Calculate statistics
-accuracy = accuracy_score(y_test, y_pred)
-class_report = classification_report(y_test, y_pred)
-conf_matrix = confusion_matrix(y_test, y_pred)
+# Step 4: Evaluate performance
+final_y_pred = final_tree.predict(X_test)
+final_accuracy = accuracy_score(y_test, final_y_pred)
+class_report = classification_report(y_test, final_y_pred)
+conf_matrix = confusion_matrix(y_test, final_y_pred)
 
-# Print statistics
-print(f"Best Parameters: {best_params}")
-print(f"Accuracy: {accuracy}")
+print(f"Optimal ccp_alpha: {optimal_alpha}")
+print(f"Final Accuracy with Pruned Tree: {final_accuracy}")
 print("\nClassification Report:")
 print(class_report)
-
-# Visualize the Decision Tree
-plt.figure(figsize=(20, 10))
-plot_tree(
-    best_cart_model, 
-    filled=True, 
-    feature_names=X_train.columns, 
-    class_names=[str(cls) for cls in np.unique(y)], 
-    rounded=True
-)
-plt.title("Decision Tree Visualization")
-plt.show()
 
 # Plot confusion matrix
 plt.figure(figsize=(8, 6))
@@ -85,8 +84,20 @@ plt.ylabel('Actual')
 plt.xlabel('Predicted')
 plt.show()
 
+# Visualize the Decision Tree
+plt.figure(figsize=(20, 10))
+plot_tree(
+    final_tree,
+    filled=True,
+    feature_names=X_train.columns,
+    class_names=[str(cls) for cls in np.unique(y)],
+    rounded=True
+)
+plt.title("Decision Tree Visualization")
+plt.show()
+
 # Display feature importances
-importances = pd.Series(best_cart_model.feature_importances_, index=X_train.columns)
+importances = pd.Series(final_tree.feature_importances_, index=X_train.columns)
 importances = importances.sort_values(ascending=False)
 
 plt.figure(figsize=(12, 8))
@@ -95,17 +106,17 @@ plt.title('Feature Importances')
 plt.show()
 
 # Evaluate Training Accuracy
-y_train_pred = best_cart_model.predict(X_train)
+y_train_pred = final_tree.predict(X_train)
 train_accuracy = accuracy_score(y_train, y_train_pred)
 print(f"Training Accuracy: {train_accuracy}")
 
 # Evaluate Cross-Validation Mean Accuracy
-cv_mean_score = grid_search.best_score_
+cv_mean_score = alpha_results['cv_score'].max()
 print(f"Cross-Validation Mean Accuracy: {cv_mean_score}")
 
-# Plot Learning Curve
+# Step 5: Plot Learning Curve
 train_sizes, train_scores, test_scores = learning_curve(
-    best_cart_model, X_train, y_train, cv=cv, scoring='accuracy', n_jobs=-1, train_sizes=np.linspace(0.1, 1.0, 10), random_state=42
+    final_tree, X_train, y_train, cv=cv, scoring='accuracy', n_jobs=-1, train_sizes=np.linspace(0.1, 1.0, 10), random_state=42
 )
 
 train_scores_mean = np.mean(train_scores, axis=1)
