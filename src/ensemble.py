@@ -1,3 +1,5 @@
+#ensemble
+
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import VotingClassifier, BaggingClassifier
@@ -6,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
-file_path = '/home/smgb/College/project/diabetes_detection/datasets/main.csv' 
+file_path = 'main.csv' 
 data = pd.read_csv(file_path)
 
 label_encoder = LabelEncoder()
