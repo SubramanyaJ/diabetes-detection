@@ -33,7 +33,7 @@ log_reg_l2 = LogisticRegression(penalty='l2', solver='liblinear', random_state=4
 
 # Parameter grids for GridSearchCV
 param_grid_nb = {'var_smoothing': [1e-8]}
-param_grid_dt = {'criterion': ['entropy'], 'splitter': ['best'], 'max_depth': [7], 'min_samples_split': [20], 'min_samples_leaf': [10], 'max_features': [None]}
+param_grid_dt = {'criterion': ['entropy'], 'splitter': ['best'], 'max_depth': [7], 'min_samples_split': [80], 'min_samples_leaf': [50], 'max_features': [None]}
 param_grid_logreg = {'C': [0.1, 1, 10]}
 
 # Create the voting classifier
@@ -102,4 +102,6 @@ plt.title('Confusion Matrix')
 plt.ylabel('Actual')
 plt.xlabel('Predicted')
 plt.show()
+
+
 

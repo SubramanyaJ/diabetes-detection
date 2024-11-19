@@ -1,5 +1,3 @@
-# Accuracy : 0.8720684672668667
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -18,7 +16,7 @@ X = data.drop(columns=['Target'])
 y = data['Target']
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.333, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.40, random_state=27)
 
 # Standardize the data
 scaler = StandardScaler()
@@ -38,8 +36,8 @@ param_grid_rf = {
     'n_estimators': [50],  # Reduced to one option
     'criterion': ['entropy'],
     'max_depth': [10],  # Only one option
-    'min_samples_split': [2, 5],  # Fewer options
-    'min_samples_leaf': [1],  # Fixed value
+    'min_samples_split': [60],  # Fewer options
+    'min_samples_leaf': [60],  # Fixed value
     'max_features': [None]
 }
 
