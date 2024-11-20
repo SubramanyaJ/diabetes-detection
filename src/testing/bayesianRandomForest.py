@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load data
-data_path = '../../datasets/modified_data.csv'  # Replace with your file path
+data_path = '../../datasets/balanced_data.csv'  # Replace with your file path
 data = pd.read_csv(data_path)
 
 # Feature-target separation
@@ -19,7 +19,7 @@ y = data['Target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
 
 # Define a Bayesian Random Forest (using a base RandomForestClassifier for simplicity)
-rf = RandomForestClassifier(random_state=42)
+rf = RandomForestClassifier(max_leaf_nodes=25, random_state=42)
 
 # Perform GridSearchCV to find optimal parameters
 param_grid = {
@@ -29,10 +29,12 @@ param_grid = {
     'min_samples_leaf': [80],
     'bootstrap' : [True],
     'max_features' : ['sqrt'],
-    'criterion' : ['entropy']
+    'criterion' : ['entropy'],
+#   'ccp_alpha': [0.2]
+    'class_weight': ['balanced_subsample']
 }
 grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, 
-                           scoring='precision', cv=8, verbose=1, n_jobs=-1)
+                           scoring='recall', cv=8, verbose=1, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
 # Best model
@@ -45,7 +47,7 @@ X_train_pruned = X_train #.iloc[:, important_features]
 X_test_pruned = X_test #.iloc[:, important_features]
 
 # Cross-validation to check for overfitting
-cv_scores = cross_val_score(best_rf, X_train_pruned, y_train, cv=8, scoring='accuracy')
+cv_scores = cross_val_score(best_rf, X_train_pruned, y_train, cv=12, scoring='accuracy')
 print("Cross-validation scores:", cv_scores)
 print("Mean CV Accuracy:", np.mean(cv_scores))
 
