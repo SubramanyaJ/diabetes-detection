@@ -34,6 +34,7 @@ param_grid = {
     'class_weight': ['balanced_subsample']
 }
 grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, 
+                           #funnel plot
                            scoring='recall', cv=8, verbose=1, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
@@ -68,3 +69,8 @@ plt.figure(figsize=(20, 10))
 plot_tree(random_tree, feature_names=X_train_pruned.columns, class_names=best_rf.classes_.astype(str), filled=True)
 plt.title("Random Tree from the Random Forest")
 plt.show()
+
+# Funnel plots
+# Parameters for type 2 and type 3 distinguish
+#! brain insulin resistance and neurotoxins
+
