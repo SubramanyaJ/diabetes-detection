@@ -3,7 +3,7 @@
 import pandas as pd
 
 input_file = '../../datasets/master.csv' 
-output_file = '../../datasets/main.csv' 
+output_file = '../../datasets/attributesFiltered.csv' 
 
 # List of columns to keep
 columns_to_keep = [
@@ -14,7 +14,9 @@ columns_to_keep = [
     'Waist Circumference',
     'Cholesterol Levels',
     'Blood Glucose Levels',
-    'Pancreatic Health'
+    'Pancreatic Health',
+    'Neurological Assessments',
+    'Glucose Tolerance Test'
 ]
 
 try:
