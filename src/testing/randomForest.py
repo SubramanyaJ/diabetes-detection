@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load data
-data_path = '../../datasets/balanced_data.csv'  # Replace with your file path
+data_path = '../../datasets/data.csv'  # Replace with your file path
 data = pd.read_csv(data_path)
 
 # Feature-target separation
@@ -72,5 +72,23 @@ plt.show()
 
 # Funnel plots
 # Parameters for type 2 and type 3 distinguish
-#! brain insulin resistance and neurotoxins
+#! Brain insulin resistance and neurotoxins
+
+# Extract tree depths and corresponding scores
+tree_depths = [estimator.tree_.max_depth for estimator in best_rf.estimators_]
+tree_scores = [estimator.score(X_test_pruned, y_test) for estimator in best_rf.estimators_]
+
+# Create a DataFrame for visualization
+tree_stats = pd.DataFrame({'Tree Depth': tree_depths, 'Score': tree_scores})
+
+# Funnel plot
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Tree Depth', y='Score', data=tree_stats, alpha=0.7, color='blue')
+sns.lineplot(x='Tree Depth', y='Score', data=tree_stats, color='orange', label='Trend')
+plt.title("Funnel Plot of Tree Depth vs. Score")
+plt.xlabel("Tree Depth")
+plt.ylabel("Score")
+plt.grid(alpha=0.3)
+plt.legend()
+plt.show()
 
