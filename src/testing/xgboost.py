@@ -9,7 +9,7 @@ from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import LabelEncoder
 
 # Load new data
-data_path = 'newdata1.csv'  # Replace with your new file path
+data_path = 'data.csv'  # Replace with your new file path
 data = pd.read_csv(data_path)
 
 # Inspect the unique values in the target column
