@@ -9,7 +9,7 @@ from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import LabelEncoder
 
 # Load new data
-data_path = 'data.csv'  # Replace with your new file path
+data_path = '../../datasets/data.csv'  # Replace with your new file path
 data = pd.read_csv(data_path)
 
 # Inspect the unique values in the target column
@@ -114,5 +114,3 @@ for tree in booster.get_dump(with_stats=True):
     # Append statistics for this tree
     tree_depths.append(max_depth)
     average_gains.append(total_gain / node_count if node_count > 0 else 0)
-
-
