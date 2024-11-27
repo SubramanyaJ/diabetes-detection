@@ -17,8 +17,7 @@ columns_to_keep = [
     'Pancreatic Health',
     # 'Neurological Assessments',
     # 'Glucose Tolerance Test',
-    'Digestive Enzyme Levels'
-    
+    'Digestive Enzyme Levels'    
 ]
 
 try:
@@ -40,7 +39,7 @@ except Exception as e:
 import pandas as pd
 
 # Specify the input file name
-input_file = 'attributesFiltered.csv'  # Change this to your actual input file path
+input_file = '../../datasets/attributesFiltered.csv'  # Change this to your actual input file path
 
 # Function to filter rows based on user input
 def filter_by_attribute(attribute, values):
@@ -119,7 +118,7 @@ def convert_and_save(input_file, output_file):
 
 # Example usage
 input_file_path = 'newtargetsFiltered.csv'  
-output_file_path = 'newdata1.csv' 
+output_file_path = '../../datasets/data.csv' 
 convert_and_save(input_file_path, output_file_path)
 
 # Target
