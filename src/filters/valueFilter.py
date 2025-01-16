@@ -3,7 +3,7 @@
 import pandas as pd
 
 # Specify the input file name
-input_file = '../../datasets/attributesFiltered.csv'  # Change this to your actual input file path
+input_file = '../../datasets/master.csv'
 
 # Function to filter rows based on user input
 def filter_by_attribute(attribute, values):
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     # Write the filtered DataFrame to a new CSV file if not None
     if filtered_df is not None and not filtered_df.empty:
-        output_file = '../../datasets/targetsFiltered.csv'  # Specify your desired output file name
+        output_file = '../../datasets/new.csv'
         filtered_df.to_csv(output_file, index=False)
         print(f'Filtered data has been saved to {output_file}.')
     else:

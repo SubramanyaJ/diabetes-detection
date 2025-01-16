@@ -9,10 +9,8 @@ def convert_and_save(input_file, output_file):
     #    target_mapping = {
     #       'No Diabetes': 0,
     #       'Prediabetic': 1,
-    #      'Type 1 Diabetes': 2,
-    #     'Type 2 Diabetes': 3,
-    #       'Secondary Diabetes': 4,
-    #    'Type 3c Diabetes (Pancreatogenic Diabetes)' : 4
+    #       'Type 1 Diabetes': 2,
+    #       'Type 2 Diabetes': 3,
     #}
     
     # Sarthaka's XGBoost dataset does not fit, so : 
@@ -22,7 +20,6 @@ def convert_and_save(input_file, output_file):
         3 : 2,
         4 : 3
     }
- 
 
     # Convert the Target column using the mapping
     df['Target'] = df['Target'].map(target_mapping)

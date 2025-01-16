@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Input and output file paths
-input_file = '/diabetes_detection/datasets/master.csv'
-final_output_file = '/diabetes_detection/datasets/new.csv'
+input_file = '../../datasets/new.csv'
+final_output_file = '../../datasets/new.csv'
 
 # List of columns to keep
 columns_to_keep = [
@@ -10,10 +10,12 @@ columns_to_keep = [
     'Insulin Levels',
     'Age',
     'BMI',
+    'Waist Circumference',
     'Cholesterol Levels',
     'Blood Glucose Levels',
     'Pancreatic Health',
-    'Digestive Enzyme Levels'
+    'Neurological Assessments',
+    'Glucose Tolerance Test'
 ]
 
 # Mapping for the Target column
@@ -22,6 +24,11 @@ target_mapping = {
     'Type 1 Diabetes': 1,
     'Type 2 Diabetes': 2,
     'Type 3c Diabetes (Pancreatogenic Diabetes)': 3
+}
+
+glucose_mapping = {
+    'Normal' : 0,
+    'Abnormal' : 1
 }
 
 def process_data(input_file, final_output_file, columns_to_keep, target_mapping):
@@ -44,6 +51,7 @@ def process_data(input_file, final_output_file, columns_to_keep, target_mapping)
 
         # Step 4: Convert Target column to numerical values
         filtered_df['Target'] = filtered_df['Target'].map(target_mapping)
+        filtered_df['Glucose Tolerance Test'] = filtered_df['Glucose Tolerance Test'].map(glucose_mapping)
 
         # Step 5: Save the final DataFrame to the specified output file
         filtered_df.to_csv(final_output_file, index=False)

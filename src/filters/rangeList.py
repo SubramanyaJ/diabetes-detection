@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-input_file = '../../datasets/attributesFiltered.csv'
+input_file = '../../datasets/master.csv'
 
 # Function to get unique values for a given attribute
 def get_unique_values(attribute):
