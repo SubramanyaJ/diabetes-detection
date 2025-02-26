@@ -1,0 +1,7 @@
+Create a graphical representation for everything
+Introduce correlation matrix
+True positive rate vs False positive rate
+Create a trained state, and an input program to the said trained state
+Test trained state with other datasets
+JOIN with other datasets having no diabetes
+Train the model on new dataset and tabulate the result

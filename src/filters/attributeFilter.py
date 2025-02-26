@@ -2,8 +2,8 @@
 
 import pandas as pd
 
-input_file = '../../datasets/master.csv' 
-output_file = '../../datasets/attributesFiltered.csv' 
+input_file = '../../datasets/data.csv' 
+output_file = '../../datasets/main.csv' 
 
 # List of columns to keep
 columns_to_keep = [
@@ -13,10 +13,10 @@ columns_to_keep = [
     'BMI',
     'Waist Circumference',
     'Cholesterol Levels',
-    'Blood Glucose Levels',
-    'Pancreatic Health',
-    'Neurological Assessments',
-    'Glucose Tolerance Test'
+    'Blood Glucose Levels'
+#    'Pancreatic Health'
+#    'Neurological Assessments',
+#    'Glucose Tolerance Test'
 ]
 
 try:
