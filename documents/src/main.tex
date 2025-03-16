@@ -1,34 +1,106 @@
+% /* Setup and package imports */
 \documentclass{article}
-
 \usepackage{multicol}
 \usepackage{cite}
 \usepackage[english]{babel}
-
-% Or, use letterpaper
-\usepackage[a4paper ,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-
-% Packages
+\usepackage[a4paper ,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+% /* End of declarations */
 
-\title{paper-title}
+% /* Start of content */
+\title{Diabetes Detection With Machine Learning}
 \author{author-list}
 
 \begin{document}
 \maketitle
 
+% /* Abstract */
 \begin{abstract}
-	Diabetes is an endocrine disease that results in presence of excess blood sugar, which leads to a multitude of complications. The past decade has seen an alarming increase in diabetes prevalence, with the number of people with diabetes expected to exceed 570 million by this year. 
-	In parallel, recent years have seen many leaps in development and performance of machine learning models. This study is an attempt at harnessing these models to predict diabetes, using a well-established benchmark dataset.
-	Existing models suffer from being unable to differentiate between different types of diabetes due to lack of data points in a single dataset. Our model hopes to alleviate this weakness by compounding two datasets with adequate data, such that one predicts the presence of diabetes, and the other, the different types of diabetes. Prediabetes, Type 1 Diabetes, Type 2 Diabetes, and Pancreatogenic Diabetes were chosen for detection.
-	Naive Bayes Classifier, K-Nearest Neighbours, Logistic Regression, Random Forest and XGBoost algorithms were used, with XGBoost showing the most promise.
-	The XGBoost model was thus selected, and its <> was used to obtain a feature importance graph in order to validate the outcome against existing data, and further interpret the patterns among different diabetes types.
-	A model like this could potentially be used for diabetes detection using readily available parameters.
+Diabetes is an endocrine disease that results in presence of excess blood sugar, which leads to a multitude of complications. The past decade has seen an alarming increase in diabetes prevalence, with the number of people with diabetes expected to exceed 570 million by this year. 
+In parallel, recent years have seen many leaps in development and performance of machine learning models. This study is an attempt at harnessing these models to predict diabetes, using a well-established benchmark dataset.
+Existing models suffer from being unable to differentiate between different types of diabetes due to lack of data points in a single dataset. Our model hopes to alleviate this weakness by compounding two datasets with adequate data, such that one predicts the presence of diabetes, and the other, the different types of diabetes. Prediabetes, Type 1 Diabetes, Type 2 Diabetes, and Pancreatogenic Diabetes were chosen for detection.
+Naive Bayes Classifier, K-Nearest Neighbours, Logistic Regression, Random Forest and XGBoost algorithms were used, with XGBoost showing the most promise.
+The XGBoost model was thus selected, and its <> was used to obtain a feature importance graph in order to validate the outcome against existing data, and further interpret the patterns among different diabetes types.
+A model like this could potentially be used for diabetes detection using readily available parameters.
 \end{abstract}
 
+\begin{multicols}{2}
 
+\section{Introduction}
 
-% \bibliographystyle{plain}
-% \bibliography{main}
+% What is diabetes ?
+Diabetes mellitus, commonly known as diabetes, is an umbrella term used to refer to a group of endocrine diseases.
+
+% Why does diabetes occur?
+It is a chronic condition where the body does not produce enough insulin, or cannot effectively use the insulin it produces, leading to high blood sugar levels\cite{roglic2016global}.
+There are multiple factors that can cause diabetes, such as pancreatic cancer, pancreatitis, genetic defects, and surgery.
+Apart from these medical factors, unhealthy dietary patterns, socio-economic development, and sedentary lifestyles have been identified as determinants that are driving an increase in prevelance of diabetes\cite{caturano2023oxidative}.
+
+% Diabetes in numbers
+It is estimated that 537 million people in the age range of 20 to 79 are affected by diabetes, and this number will grow to 643 million by 2045.
+A study by Kumar et al. (2021) concluded that incidence of diabetes in India would grow from 9.6\% in 2021 to 10.9\% in 2045\cite{kumar2024prevalence}.
+
+% Common symptoms
+Resistance to, or an insufficient amount of insulin causes suboptimal conversion of food to energy, resulting in increased hunger levels, called as polyphagia.
+Further, the kidney utilises more water to filter the excessive glucose in the bloodstream causing abnormal urination frequency (polyuria) and excessive thirst (polydipsia).
+
+% Types of diabetes
+The World Health Organization classifies diabetes into 6 categories. Among these are Type 1 Diabetes and Type 2 Diabetes have the highest prevelance.
+A Prediabetic state has been identified, as an early stage of diabetes.
+Further, diabetic states that occur as a consequence of pancreatic diseases have been grouped under Pancreatogenic Diabetes, also termed as Type 3c diabetes.
+
+Type 1 Diabetes is typically a consequence of autoimmune destruction, causing the pancreatic $\beta$ cells to stop producing insulin. 
+Due to its autoimmune nature and by extension, genetic predisposition, it is likely to occur at a younger age compared to other types of diabetes.
+People with this type of diabetes are at a higher risk of developing other autoimmune disorders. They require external doses of insulin for survival\cite{syed2022type}.
+
+On the other hand, Type 2 Diabetes is characterised by insulin resistance and a progressive lack of insulin. Initially, the pancreas compensates by producing more insulin, but over time, it becomes unable to keep up with the demand, causing the blood sugar to rise.
+Although some people are more genetically prone, it also heavily depends on lifestyle factors, like lack of exercise and obesity. It accounts for nearly 90\% of all diabetes cases.
+Type 2 Diabetes may lead to severe complications, such as cardiovascular diseases, kidney damage, nerve damage and retinopathy.
+
+Prediabetes is a considered a precursor to Type 2 Diabetes, where the blood sugar level is high, but not high enough to be classified into the latter. People in this stage show many of the common symptoms of diabetes like polyuria and polyphagia.
+A study by Schlesinger et al. showed that prediabetes markedly increased the risk for incidence of cardiovascular, renal, hepatic failurea, as well as the risk of cancer and dementia\cite{schlesinger2022prediabetes}
+
+Pancreatogenic diabetes is the  most common after Type 2 Diabetes. Patients with acute pancreatitis are at a 34.5\% risk of developing diabetes.\cite{garcia2023post}
+A study by Shivaprasad et al. concluded that the mortality and morbidity is higher for Type 3c Diabetes than Type 2 Diabetes\cite{shivaprasad2021comparison}.
+
+% Artificial Intelligence intro
+The recent rise in artificial intelligence has had an impact on the healthcare field, with analytical and machine learning models processing the available health records in order to predict patient outcomes and diagnose patients more efficiently.
+It has accelerated the efficiency and accuracy of diagnosis by enabling  data-driven decisions with greater confidence. AI systems can analyze vast amounts of medical data—such as electronic health records (EHRs), medical imaging, and genomics, allowing for early detection of conditions like cancer, heart disease, and neurological disorders, often at stages when treatments are more effective.
+
+However, the healthcare field poses its own set of challenges to Artificial Intelligence. Availability of credible datasets, especially in economically challenged areas is scarce. This might inadvertently lead to a model that is biased due the prevalence of data from socio-ethnic groups with higher accesibility to healthcare facilities.
+Data privacy is yet another concern, and the abstract nature of many machine learning models raises questions about their internal working and their reliability.
+
+% A few models
+
+Various machine learning models have been employed for diabetes prediction. 
+K-Nearest Neighbors (KNN) has been used due to its effectiveness in handling non-linear data, achieving moderate accuracy in binary classification tasks. 
+Naive Bayes uses a probabilistic approach, but it often struggles with feature dependencies. 
+XGBoost has emerged as the leading algorithm, utilizing gradient-boosted trees to achieve high accuracy and robust performance on imbalanced datasets. 
+Random Forest is yet another important algorithm, providing interpretability through feature importance.
+Despite these advancements, most models focus on binary classification (diabetes vs. non-diabetes) and fail to differentiate between diabetes types, such as Type 1, Type 2, Prediabetes, and Pancreatogenic Diabetes.
+This limitation underscores the need for more comprehensive approaches, such as the one proposed in this study.
+
+% What we have attempted
+This limitation stems from the lack of datasets that include sufficient data points for type-specific classification. To bridge this gap, this study proposes a novel two-stage approach :
+An initial binary classification using the Pima Indians dataset, and a subsequent multi-class classification using a secondary dataset to distinguish between Type 1 Diabetes, Type 2 Diabetes, Prediabetes, and Pancreatogenic Diabetes.
+By developing the model in this manner, we address the critical limitation of existing approaches, which lack the granularity to differentiate between diabetes subtypes, thereby enabling more precise predictions.
+
+\section{Literature Review}
+
+Many attempts have been made to successfully integrate ML techniques for detection of diabetes. Systems to predict hypoglycemic attacks 1 hour in advance based on Continuous Glucose Monitoring using AI, with an accuracy of 98.5\% have been developed\cite{nomura2021artificial}.
+
+%	\section{Methodology}
+%
+%	\section{Result}
+%
+%	\section{Conclusion}
+%
+\fontsize{8}{2}\selectfont
+\bibliographystyle{unsrt}
+\bibliography{main}
+
+\end{multicols}
+
 \end{document}
