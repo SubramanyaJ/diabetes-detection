@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{roglic2016global}
 Gojka Roglic.
@@ -48,11 +48,26 @@ Channabasappa Shivaprasad, Yalamanchi Aiswarya, Shah Kejal, Atluri Sridevi,
 \newblock {\em Journal of diabetes science and technology}, 15(1):134--140,
   2021.
 
-\bibitem{nomura2021artificial}
-Akihiro Nomura, Masahiro Noguchi, Mitsuhiro Kometani, Kenji Furukawa, and
-  Takashi Yoneda.
-\newblock Artificial intelligence in current diabetes management and
-  prediction.
-\newblock {\em Current Diabetes Reports}, 21(12):61, 2021.
+\bibitem{rajendra2021prediction}
+Priyanka Rajendra and Shahram Latifi.
+\newblock Prediction of diabetes using logistic regression and ensemble
+  techniques.
+\newblock {\em Computer Methods and Programs in Biomedicine Update}, 1:100032,
+  2021.
+
+\bibitem{seto2022gradient}
+Hiroe Seto, Asuka Oyama, Shuji Kitora, Hiroshi Toki, Ryohei Yamamoto,
+  Jun’ichi Kotoku, Akihiro Haga, Maki Shinzawa, Miyae Yamakawa, Sakiko Fukui,
+  et~al.
+\newblock Gradient boosting decision tree becomes more reliable than logistic
+  regression in predicting probability for diabetes with big data.
+\newblock {\em Scientific reports}, 12(1):15889, 2022.
+
+\bibitem{salem2022fine}
+Hanaa Salem, Mahmoud~Y Shams, Omar~M Elzeki, Mohamed Abd~Elfattah, Jehad
+  F.~Al-Amri, and Shaima Elnazer.
+\newblock Fine-tuning fuzzy knn classifier based on uncertainty membership for
+  the medical diagnosis of diabetes.
+\newblock {\em Applied Sciences}, 12(3):950, 2022.
 
 \end{thebibliography}

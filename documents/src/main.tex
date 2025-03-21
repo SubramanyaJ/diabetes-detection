@@ -15,6 +15,7 @@
 
 \begin{document}
 \maketitle
+\fontsize{10}{12}\selectfont
 
 % /* Abstract */
 \begin{abstract}
@@ -75,7 +76,7 @@ Data privacy is yet another concern, and the abstract nature of many machine lea
 % A few models
 
 Various machine learning models have been employed for diabetes prediction. 
-K-Nearest Neighbors (KNN) has been used due to its effectiveness in handling non-linear data, achieving moderate accuracy in binary classification tasks. 
+K-Nearest Neighbours (KNN) has been used due to its effectiveness in handling non-linear data, achieving moderate accuracy in binary classification tasks. 
 Naive Bayes uses a probabilistic approach, but it often struggles with feature dependencies. 
 XGBoost has emerged as the leading algorithm, utilizing gradient-boosted trees to achieve high accuracy and robust performance on imbalanced datasets. 
 Random Forest is yet another important algorithm, providing interpretability through feature importance.
@@ -89,7 +90,21 @@ By developing the model in this manner, we address the critical limitation of ex
 
 \section{Literature Review}
 
-Many attempts have been made to successfully integrate ML techniques for detection of diabetes. Systems to predict hypoglycemic attacks 1 hour in advance based on Continuous Glucose Monitoring using AI, with an accuracy of 98.5\% have been developed\cite{nomura2021artificial}.
+Many attempts have been made to successfully integrate ML techniques for detection of diabetes, and several different techniques have been used for the same.
+
+KNN predicts the class of a data point by looking at the classes of its nearest neighbours in the feature space. It is a simple, non-parametric method that relies totally on the data’s structure. While it gives a straightforward interpretation, it is sensitive to the choice of distance metric and the number of neighbors.
+Logistic Regression predicts the probability of a binary outcome using a sigmoid function. It learns the relationship between input features and the log-odds of the target variable, making linear classifier. However, it assumes a linear relationship between features and the target, which can limit its performance on complex datasets.
+Decision Trees split the data into regions based on feature values, aiming to maximize the purity of each region. 
+They are intuitive and easy to interpret, but they tend to overfit the training data, especially when grown too deep.
+To counter this, a Random Forest classifier can be used, that combines multiple decision trees, each trained on a random subset of the data and features. The final prediction is made by averaging or taking a majority vote from all trees. This ensemble approach makes Random Forest robust and reliable for classification tasks.
+
+It has been shown that ensemble techniques perform better than logistic regression, due to the fact that LR sufferrs from assuming linear relationships and is much more sensitive to outliers.
+Rajendra and Latifi concluded that the ensemble techinques Max Voting and Stacking fare better than Logistic Regression, with the latter having an accuracy 93.04\% of to the former's 74.03 when trained without feature selection\cite{rajendra2021prediction}.
+Seto et al. provided evidence that Gradient Boosted Decision Trees (GBDT) and logistic regression models perform somewhat equally upto training data size of $10^{4}$, GBDT shows a significant increase after this number, while LR the model's metrics become saturated\cite{seto2022gradient}.
+
+Salem et al. utilised the basic K - nearest neighbours and two of its variants which allow partial membership in multiple classes, Fuzzy KNN nand TFKNN. TFKNN turned out to be the best performer with 94.13\% specific accuracy\cite{salem2022fine}
+
+
 
 %	\section{Methodology}
 %
