@@ -1,0 +1,19 @@
+diabetes-detection
+==================
+
+This repository contains a failed attempt at diabetes detection using mathematical models.
+Prediabetes, Type 1 diabetes, Type 2 diabetes, and Pancreatic diabetes were the targets of the prediction.
+XGBoost and Random Forest models both showed nearly equal efficiency.
+The attempt also focused on using a dual layer approach : One smaller dataset that judges the presence of diabetes and a larger dataset for classification.
+
+Finding a exotic and genuine dataset large enough for the job was almost impossible.
+Hence, a synthetic dataset has been used for the second layer.
+
+However, the quantity and quality of data required for such an undertaking is just too much.
+This was further compounded by my lack of complete understanding of the models I was using. As I moved to fields with lesser code abstraction, my interest in this project waned.
+
+Hopefully, this repository can become a starting point for others who wish to continue.
+Feel free to fork this repository and use it in any way you see fit.
+
+All the best,
+Subramanya J
